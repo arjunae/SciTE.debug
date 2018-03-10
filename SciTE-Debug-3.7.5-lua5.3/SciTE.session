@@ -1,0 +1,15 @@
+# SciTE session file
+
+position.left=30
+position.top=60
+position.width=720
+position.height=300
+position.maximize=0
+
+mru.1.path=E:\projects\_myScite\_myScite.github\SciTE_lua53_win32\doc\testcases\data\test_lua_dbg.lua
+mru.2.path=E:\projects\_scite.debug.github\SciTE-Debug-3.7.5-lua5.3\test_lua_dbg.lua
+
+buffer.1.path=E:\projects\_scite.debug.github\SciTE-Debug-3.7.5-lua5.3\test_lua_dbg.lua
+buffer.1.position=122
+buffer.1.scroll=0
+buffer.1.current=1
