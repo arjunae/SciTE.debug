@@ -4,8 +4,10 @@
 -- (1) debug.backtrace.depth will configure depth of stack frame dump (default is 20)
 -- (3) first generalized version
 
-require "lfs" --chdir
-
+if lfs==nil then err,lfs = pcall( require,"lfs") end
+if type(lfs.chdir)~="function" then error("Error: cannot find lua module 'lfs'") end 
+if spawner==nil then err,spawner = pcall( require,"spawner") end
+if type(spawner.new)~="function" then error("Error: cannot find lua module 'spawner'") end
 local GTK = scite_GetProp('PLAT_GTK')
 local stripText = ''
 

@@ -1,0 +1,27 @@
+
+#LUALIB = -L..\clib\ -lscite
+#LUALIB   = -L..\clib\ -llua5.3
+LUALIB = -L..\..\clib\scite_lua$(LUA_PLAT)\ $(LUA_LIB)
+WARNS32= -Wno-incompatible-pointer-types 
+CBASEFLAGS= -s -shared -DLUA_COMPAT_5_1 $(WARNS32)
+
+ifdef DEBUG
+CFLAGS=-DDEBUG -g $(CBASEFLAGS)
+else
+CFLAGS=-DNDEBUG -Os $(CBASEFLAGS)
+STRIPFLAG="-Wl,-s"
+endif
+
+windows: spawner-ex.dll stubby.dll dbgl.dll
+
+all: $(windows)
+
+clean:
+	IF EXIST *.o del *.o 1>NUL
+
+spawner-ex.dll: win-spawner-ex.c
+	gcc $(CFLAGS) $(STRIPFLAG) -o spawner-ex.dll -I..\\..\\lua\\$(LUA_PLAT)\\src win-spawner-ex.c --static $(LUALIB)
+stubby.dll: stubby.c
+	gcc $(CFLAGS) $(STRIPFLAG) -o stubby.dll -I..\\..\\lua\\$(LUA_PLAT)\\src stubby.c $(LUALIB)
+dbgl.dll: win-spawner-ex.c	
+	gcc $(CFLAGS) $(STRIPFLAG) -o dbgl.dll -I..\\..\\lua\\$(LUA_PLAT)\\src dbgl.c $(LUALIB)

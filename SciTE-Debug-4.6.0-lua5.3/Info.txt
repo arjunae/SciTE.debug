@@ -1,0 +1,1 @@
+Just extract SciTEs exe and its accompagning dlls in here - anything from 4.1.0 up should do.

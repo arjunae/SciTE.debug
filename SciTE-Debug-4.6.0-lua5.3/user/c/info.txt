@@ -1,0 +1,4 @@
+scite-debug depends on spawner-ex and lfs libraries.
+debugger.lua uses spawner-ex.dll to fork the debuggee as well as pipeing its in and output back to scite and lfs.dll for some filesystem work.
+These libs are prebuild binaries for Scite >= 4.1, where x32 contains 32Bit and  x64 contains the 64bit lib versions.
+Just copy the prebuild ones in here or build them yourself.  
