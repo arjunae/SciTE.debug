@@ -44,7 +44,7 @@ end
 function newDebugger(luafile,interactive)
     local debg={}
   	 status="down"
-    setmetatable(debg,dbgMetatable)
+	 setmetatable(debg,dbgMetatable)
 	 debg:init(luafile,interactive)
     return debg
 end
@@ -56,7 +56,7 @@ function dbgMethods:write(str)
 end
 
 function dbgMethods:writeln(...)	
-   local nargs = select("#", ...)
+  	local nargs = select("#", ...)
 	
 	for x=1,nargs do 
 		self:write(select(x, ... ).."\n" or "<NULL>")
@@ -285,7 +285,7 @@ function dbgMethods:cmd_locals(options)
 		local v = bindings[k]
 		-- Skip the debugger object itself, "(*internal)" values, and Lua 5.2's _ENV object.
 		if not rawequal(v, self) and k ~= "_ENV" and not k:match("%(.*%)") then
-        self:writeln(k.." => "..self:pretty(v))
+        	self:writeln(k.." => "..self:pretty(v))
 		end
 	end
 	
@@ -351,7 +351,6 @@ local function cmd_handler(cmd,param)
 	local ok
 	if status=="down" and not cmd:match("^[Ihq%.].*$") then return -2 end
 	if cmd then 
-		if cmd=='r' then dbgMethods:init_dbge(dbge_fname) end
 		if cmd=='t' then dbgMethods:cmd_trace() end
 		if cmd=='w' then dbgMethods:cmd_where(5) end
 		if cmd=='l' then dbgMethods:cmd_locals(param) end
@@ -371,7 +370,7 @@ local function onOutputLn(str,strb)
 	local ok
 	if type(strb)=="string" then str=strb end
 	str=string.sub(str,#dbgPrompt+1)
-	local cmd, param=str:match("^([rAtIwlsSgq%h])(.*)$")	-- supported Commands
+	local cmd, param=str:match("^([AtIwlsSgq%h])(.*)$")	-- supported Commands
 	if cmd then
 		ok=cmd_handler(cmd,param)
 	elseif not string.match(str,"error") then
