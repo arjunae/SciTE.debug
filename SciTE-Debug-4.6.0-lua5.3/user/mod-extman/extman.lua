@@ -12,6 +12,8 @@
 
 -- 09.01.2020 Add Force Parameter to scite_OnOutputLine
 -- If defined, it will remove fn even if it was defined as a "primary_handler"
+-- 30.01.2020 add error handling to scite_Popen
+
 
 -- this is an opportunity for you to make regular Lua packages available to SciTE
 --~ package.path = package.path..';C:\\lang\\lua\\lua\\?.lua'
@@ -408,7 +410,7 @@ function scite_OnOutputLine(fn,rem,force)
     _LineOut = {}
     set_line_handler(fn,rem,_LineOut,on_line_output_char)
     if rem and force then
-       set_line_handler(fn,rem,_LineEd,on_line_output_char)
+       set_line_handler(fn,rem,_LineOut,on_line_output_char)
     elseif rem and fn ~= primary_handler then
         set_line_handler(primary_handler,false,_LineOut,on_line_output_char)
     end
