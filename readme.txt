@@ -8,4 +8,5 @@ SciTE-Debug
 Codebug
 	Debugging lua Scripts ran within Scites Lua Subsystem required a second instance and a helper script
 	like RemDebug or MobDebug.Codebug uses Gunnar Zötls lua clib called dbghelper paired with Scott Lembke's
-	debugger.lua to debug lua scripts using (SciTE's) internal lua instance only with no other dependencies.
+	debugger.lua to debug lua scripts using (SciTE's) internal lua instance only.
+	Its a single Fie solution and when used outside of SciTe, it has no other lua script dependencies.

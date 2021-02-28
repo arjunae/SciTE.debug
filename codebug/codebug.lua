@@ -17,7 +17,7 @@
 
 package.path = package.path .. ";./?.lua"
 if not pcall(require,"dbghelper") then error("\n   ## Sorry - Need lua module dbghelper.dll to run ## ") end
-local DBG_INTERACTIVE, SCITE_EXTMAN, SCITE_LUA, VANILLA_LUA
+local DBG_INTERACTIVE, SCITE_EXTMAN, SCITE_LUA, VANILLA_LUA, DIRSEP
 local dbgPrompt="coDebug> "
 local dbgBreakpoints={} -- {idx{file=LineNo}}
 local dbg_cr, dbg_info, status -- Debugging Coroutine
@@ -26,7 +26,8 @@ local dbgMethods = {}
 local dbgPath=debug.getinfo(1).source:match("@(.*[\\/]).+$") 	-- Path to current Files Dir with a trailing slash.  
 dbgMetatable.__index = dbgMethods
 if scite~=nil then SCITE_LUA=true else VANILLA_LUA=true end
-if scite_MenuCommand~=nil then SCITE_EXTMAN=true end --  Only DBG_Interactive requires "extman" 
+if scite_MenuCommand~=nil then SCITE_EXTMAN=true end --  Only DBG_Interactive paired with SciTE-Lua requires "extman" 
+if string.find(os.getenv('OS'),"Windows") then DIRSEP = '\\' else DIRSEP = '/' end
 
 -- debuggers io
 -- Defined as non local so io functions can be redefined by the caller. 
@@ -405,13 +406,13 @@ end
 -- Init debugee at its first line
 function dbgMethods:init(luafile,interactive)
 	DBG_INTERACTIVE=interactive or false
-	if DBG_INTERACTIVE and not (SCITE_EXTMAN and SCITE_LUA) then
-		self:writeln("Enabling interactive Mode requires Extman")
+	if DBG_INTERACTIVE and not (SCITE_EXTMAN or SCITE_LUA) then
+		self:writeln("Enabling interactive Mode in SciTE requires Extman")
 		return false
 	end
 	self:writeln("Init: Setting debuggee to '"..luafile.."'")
 	-- check for Debuggee, use codebugs Path if none has been given 
-	if not string.find(luafile,"\\") then luafile=dbgPath..luafile end
+	if not string.find(luafile,DIRSEP) then luafile=dbgPath..luafile end
 	if not os.rename(luafile,luafile) then 
 		status="down"
 			self:writeln("Init: Debuggee not found '"..luafile.."'")
